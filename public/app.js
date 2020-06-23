@@ -18,7 +18,7 @@ $(document).ready(function () {
             seeNoteBtn.addClass("seeNotes")
             arDiv.append(seeNoteBtn)
             arDiv.addClass("articles")
-            $("#articles").append(arDiv);
+            $("#articles").prepend(arDiv);
         }
     }).then(function () {
         $(".addNote").on("click", function () {
