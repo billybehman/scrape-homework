@@ -50,7 +50,9 @@ $(document).ready(function () {
                     .then(function (data) {
                         console.log(data);
                     });
+                    window.location.reload()
             })
+            
         })
         $(".seeNotes").on("click", function() {
             let id = $(this).parent([0]).attr("id")
@@ -62,15 +64,39 @@ $(document).ready(function () {
                 let oldNotes = $("<div>")
                 let title = data.note.title
                 let body = data.note.body
+                let noteID = data.note._id
                 let noteTitle = $("<div>")
                 let noteBody = $("<div>")
                 noteTitle.text("Title: " + title)
                 oldNotes.append(noteTitle)
                 noteBody.text("Body: " + body)
+                let deleteBtn = $("<button>")
+                deleteBtn.text("deleteNote")
+                deleteBtn.addClass("deleteNote")
+                deleteBtn.attr("id", noteID)
+                oldNotes.append(deleteBtn)
                 oldNotes.append(noteBody)
                 $('#' + id).append(oldNotes)
+            }).then(function() {
+                $(".deleteNote").on("click", function() {
+                    let id = $(this).attr("id")
+                    console.log(id)
+                    $.ajax({
+                        method: "DELETE",
+                        url: "/articles/" + id,
+                    })
+                    window.location.reload()
+                })
             })
         })
+    })
+
+    $("#deleteAll").on("click", function() {
+        $.ajax({
+            method: "DELETE",
+            url: "/articles-delete"
+        })
+        window.location.reload()
     })
 
 })
